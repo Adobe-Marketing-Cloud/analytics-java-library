@@ -1,10 +1,11 @@
 package com.adobe.analytics.client;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,9 @@ import java.util.UUID;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 
 import static com.adobe.analytics.client.JsonUtil.GSON;
 
@@ -38,12 +42,29 @@ public class AnalyticsClient {
 
 	public String callMethod(String method, String data) throws IOException {
 		final URL url = new URL(endpoint + "?method=" + method);
-		final URLConnection connection = url.openConnection();
+		final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.addRequestProperty("X-WSSE", getHeader());
 		connection.setDoOutput(true);
 
 		IOUtils.write(data, connection.getOutputStream());
-		return IOUtils.toString(connection.getInputStream());
+
+		final int status = connection.getResponseCode();
+		if (status < 200 || status > 299) {
+			final InputStream errorStream = connection.getErrorStream();
+			if (errorStream != null) {
+				final String errorMessage = IOUtils.toString(errorStream);
+				try {
+					final JsonObject jsonResult = GSON.fromJson(errorMessage, JsonObject.class);
+					throw new ApiException(jsonResult);
+				} catch (JsonSyntaxException e) {
+					// it's not a valid JSON, we'll throw an IOException below
+				}
+			}
+			throw new IOException(String.format("HTTP error %d %s", connection.getResponseCode(),
+					connection.getResponseMessage()));
+		} else {
+			return IOUtils.toString(connection.getInputStream());
+		}
 	}
 
 	private String getHeader() throws UnsupportedEncodingException {
