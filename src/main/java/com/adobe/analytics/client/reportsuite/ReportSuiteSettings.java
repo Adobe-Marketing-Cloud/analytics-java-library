@@ -7,6 +7,7 @@ import com.adobe.analytics.client.domain.Evar;
 import com.adobe.analytics.client.domain.Prop;
 import com.adobe.analytics.client.domain.ReportSuiteEvars;
 import com.adobe.analytics.client.domain.ReportSuiteProps;
+import com.adobe.analytics.client.methods.ReportSuiteMethods;
 
 public class ReportSuiteSettings {
 	public static void main(String[] args) throws IOException {

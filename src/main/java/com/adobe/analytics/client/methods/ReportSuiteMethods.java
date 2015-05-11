@@ -1,4 +1,4 @@
-package com.adobe.analytics.client.reportsuite;
+package com.adobe.analytics.client.methods;
 
 import static com.adobe.analytics.client.JsonUtil.m;
 
@@ -12,6 +12,7 @@ import com.adobe.analytics.client.domain.ReportSuiteProps;
 import com.google.gson.reflect.TypeToken;
 
 public class ReportSuiteMethods {
+
 	private final AnalyticsClient client;
 
 	public ReportSuiteMethods(AnalyticsClient client) {
