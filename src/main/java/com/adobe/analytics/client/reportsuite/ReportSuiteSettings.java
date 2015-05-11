@@ -3,10 +3,10 @@ package com.adobe.analytics.client.reportsuite;
 import java.io.IOException;
 
 import com.adobe.analytics.client.AnalyticsClient;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import static com.adobe.analytics.client.JsonUtil.*;
+import com.adobe.analytics.client.domain.Evar;
+import com.adobe.analytics.client.domain.Prop;
+import com.adobe.analytics.client.domain.ReportSuiteEvars;
+import com.adobe.analytics.client.domain.ReportSuiteProps;
 
 public class ReportSuiteSettings {
 	public static void main(String[] args) throws IOException {
@@ -15,8 +15,20 @@ public class ReportSuiteSettings {
 		final String endpoint = System.getProperty("endpoint");
 		final AnalyticsClient client = new AnalyticsClient(username, password, endpoint);
 
-		final JsonElement element = client.callMethod("ReportSuite.GetSettings", m("rsid_list", args),
-				JsonElement.class);
-		System.out.println(GSON.toJson(element));
+		final ReportSuiteMethods methods = new ReportSuiteMethods(client);
+		for (ReportSuiteEvars evars : methods.getEvars(args)) {
+			System.out.println(String.format("Evars for %s (%s)", evars.getRsid(), evars.getSiteTitle()));
+			for (Evar e : evars.getEvars()) {
+				System.out.println(e);
+			}
+		}
+		System.out.println();
+		for (ReportSuiteProps props : methods.getProps(args)) {
+			System.out.println(String.format("Props for %s (%s)", props.getRsid(), props.getSiteTitle()));
+			for (Prop p : props.getProps()) {
+				System.out.println(p);
+			}
+		}
+
 	}
 }

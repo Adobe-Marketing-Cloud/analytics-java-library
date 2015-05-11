@@ -2,6 +2,7 @@ package com.adobe.analytics.client;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
@@ -14,9 +15,6 @@ import java.util.UUID;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import static com.adobe.analytics.client.JsonUtil.GSON;
 
@@ -34,8 +32,8 @@ public class AnalyticsClient {
 		this.endpoint = endpoint;
 	}
 
-	public <T> T callMethod(String method, Object data, Class<T> responseClass) throws IOException {
-		return GSON.fromJson(callMethod(method, GSON.toJson(data)), responseClass);
+	public <T> T callMethod(String method, Object data, Type resultType) throws IOException {
+		return GSON.fromJson(callMethod(method, GSON.toJson(data)), resultType);
 	}
 
 	public String callMethod(String method, String data) throws IOException {
