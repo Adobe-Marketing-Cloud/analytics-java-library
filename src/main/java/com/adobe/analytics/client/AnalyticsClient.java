@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -48,14 +49,13 @@ public class AnalyticsClient {
 	}
 
 	private String getHeader() throws UnsupportedEncodingException {
-		final Date now = new Date();
-		final String nonce = generateNonce(now);
-		final String created = formatAsIso8601(now);
+		final String nonce = UUID.randomUUID().toString();
+		final String created = currentDate();
 		final String passwordDigest = getBase64Digest(nonce, created, password);
 		final StringBuilder builder = new StringBuilder("UsernameToken ");
 		addField(builder, "Username", username).append(", ");
 		addField(builder, "PasswordDigest", passwordDigest).append(", ");
-		addField(builder, "Nonce", nonce).append(", ");
+		addField(builder, "Nonce", Base64.encodeBase64String(nonce.getBytes())).append(", ");
 		addField(builder, "Created", created);
 		return builder.toString();
 	}
@@ -65,23 +65,20 @@ public class AnalyticsClient {
 		return builder;
 	}
 
-	private static String generateNonce(Date date) {
-		return Base64.encodeBase64String(Long.toString(date.getTime()).getBytes());
-	}
-
-	private static String formatAsIso8601(Date date) {
+	private static String currentDate() {
 		final TimeZone tz = TimeZone.getTimeZone("UTC");
 		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		df.setTimeZone(tz);
-		return df.format(date);
+		return df.format(new Date());
 	}
 
 	private static String getBase64Digest(String... strings) {
-		final MessageDigest digeste = DigestUtils.getSha1Digest();
+		final MessageDigest digest = DigestUtils.getSha1Digest();
+		digest.reset();
 		for (final String s : strings) {
-			DigestUtils.updateDigest(digeste, s);
+			DigestUtils.updateDigest(digest, s);
 		}
-		return Base64.encodeBase64String(digeste.digest());
+		return Base64.encodeBase64String(digest.digest());
 	}
 
 }
