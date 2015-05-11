@@ -18,9 +18,9 @@ import org.apache.commons.io.IOUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class AnalyticsClient {
+import static com.adobe.analytics.client.JsonUtil.GSON;
 
-	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+public class AnalyticsClient {
 
 	private final String username;
 
@@ -28,7 +28,7 @@ public class AnalyticsClient {
 
 	private final String endpoint;
 
-	private AnalyticsClient(final String username, final String password, final String endpoint) {
+	public AnalyticsClient(final String username, final String password, final String endpoint) {
 		this.username = username;
 		this.password = password;
 		this.endpoint = endpoint;
