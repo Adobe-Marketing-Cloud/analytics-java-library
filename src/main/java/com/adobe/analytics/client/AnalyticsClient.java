@@ -26,13 +26,13 @@ public class AnalyticsClient {
 
 	private final String username;
 
-	private final String password;
+	private final String secret;
 
 	private final String endpoint;
 
-	public AnalyticsClient(final String username, final String password, final String endpoint) {
+	public AnalyticsClient(final String username, final String secret, final String endpoint) {
 		this.username = username;
-		this.password = password;
+		this.secret = secret;
 		this.endpoint = endpoint;
 	}
 
@@ -41,7 +41,7 @@ public class AnalyticsClient {
 	}
 
 	public String callMethod(String method, String data) throws IOException {
-		final URL url = new URL(endpoint + "?method=" + method);
+		final URL url = new URL(String.format("https://%s/admin/1.4/rest/?method=%s", endpoint, method));
 		final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		connection.addRequestProperty("X-WSSE", getHeader());
 		connection.setDoOutput(true);
@@ -70,7 +70,7 @@ public class AnalyticsClient {
 	private String getHeader() throws UnsupportedEncodingException {
 		final String nonce = UUID.randomUUID().toString();
 		final String created = currentDate();
-		final String passwordDigest = getBase64Digest(nonce, created, password);
+		final String passwordDigest = getBase64Digest(nonce, created, secret);
 		final StringBuilder builder = new StringBuilder("UsernameToken ");
 		addField(builder, "Username", username).append(", ");
 		addField(builder, "PasswordDigest", passwordDigest).append(", ");
