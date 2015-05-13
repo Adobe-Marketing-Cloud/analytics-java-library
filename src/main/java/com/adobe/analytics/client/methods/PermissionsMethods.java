@@ -1,5 +1,7 @@
 package com.adobe.analytics.client.methods;
 
+import static com.adobe.analytics.client.JsonUtil.GSON;
+
 import java.io.IOException;
 
 import com.adobe.analytics.client.AnalyticsClient;
@@ -14,6 +16,8 @@ public class PermissionsMethods {
 	}
 
 	public boolean addLogin(AddLogin request) throws IOException {
-		return Integer.valueOf(1).equals(client.callMethod("Permissions.AddLogin", request, Integer.class));
+		final String serializedRequest = GSON.toJson(request);
+		final String response = client.callMethod("Permissions.AddLogin", serializedRequest);
+		return "true".equals(response);
 	}
 }
