@@ -7,51 +7,179 @@ import com.google.gson.annotations.SerializedName;
 public class ReportDescription {
 
 	@SerializedName("reportSuiteID")
-	protected String reportSuiteID;
+	private String reportSuiteID;
 
 	@SerializedName("date")
-	protected String date;
+	private String date;
 
 	@SerializedName("dateFrom")
-	protected String dateFrom;
+	private String dateFrom;
 
 	@SerializedName("dateTo")
-	protected String dateTo;
+	private String dateTo;
 
 	@SerializedName("dateGranularity")
-	protected ReportDescriptionDateGranularity dateGranularity;
+	private ReportDescriptionDateGranularity dateGranularity;
 
 	@SerializedName("source")
-	protected ReportDescriptionSource source;
+	private ReportDescriptionSource source;
 
 	@SerializedName("metrics")
-	protected List<ReportDescriptionMetric> metrics;
+	private List<ReportDescriptionMetric> metrics;
 
 	@SerializedName("elements")
-	protected List<ReportDescriptionElement> elements;
+	private List<ReportDescriptionElement> elements;
 
 	@SerializedName("locale")
-	protected ReportDescriptionLocale locale;
+	private ReportDescriptionLocale locale;
 
 	@SerializedName("sortMethod")
-	protected String sortMethod;
+	private String sortMethod;
 
 	@SerializedName("sortBy")
-	protected String sortBy;
+	private String sortBy;
 
 	@SerializedName("segments")
-	protected List<ReportDescriptionSegment> segments;
+	private List<ReportDescriptionSegment> segments;
 
 	@SerializedName("anomalyDetection")
-	protected Boolean anomalyDetection;
+	private Boolean anomalyDetection;
 
 	@SerializedName("currentData")
-	protected Boolean currentData;
+	private Boolean currentData;
 
 	@SerializedName("expedite")
-	protected Boolean expedite;
+	private Boolean expedite;
 
 	@SerializedName("elementDataEncoding")
-	protected ReportDescriptionElementDataEncoding elementDataEncoding;
+	private ReportDescriptionElementDataEncoding elementDataEncoding;
+
+	public String getReportSuiteID() {
+		return reportSuiteID;
+	}
+
+	public void setReportSuiteID(String reportSuiteID) {
+		this.reportSuiteID = reportSuiteID;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getDateFrom() {
+		return dateFrom;
+	}
+
+	public void setDateFrom(String dateFrom) {
+		this.dateFrom = dateFrom;
+	}
+
+	public String getDateTo() {
+		return dateTo;
+	}
+
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
+	}
+
+	public ReportDescriptionDateGranularity getDateGranularity() {
+		return dateGranularity;
+	}
+
+	public void setDateGranularity(ReportDescriptionDateGranularity dateGranularity) {
+		this.dateGranularity = dateGranularity;
+	}
+
+	public ReportDescriptionSource getSource() {
+		return source;
+	}
+
+	public void setSource(ReportDescriptionSource source) {
+		this.source = source;
+	}
+
+	public List<ReportDescriptionMetric> getMetrics() {
+		return metrics;
+	}
+
+	public void setMetrics(List<ReportDescriptionMetric> metrics) {
+		this.metrics = metrics;
+	}
+
+	public List<ReportDescriptionElement> getElements() {
+		return elements;
+	}
+
+	public void setElements(List<ReportDescriptionElement> elements) {
+		this.elements = elements;
+	}
+
+	public ReportDescriptionLocale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(ReportDescriptionLocale locale) {
+		this.locale = locale;
+	}
+
+	public String getSortMethod() {
+		return sortMethod;
+	}
+
+	public void setSortMethod(String sortMethod) {
+		this.sortMethod = sortMethod;
+	}
+
+	public String getSortBy() {
+		return sortBy;
+	}
+
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
+	}
+
+	public List<ReportDescriptionSegment> getSegments() {
+		return segments;
+	}
+
+	public void setSegments(List<ReportDescriptionSegment> segments) {
+		this.segments = segments;
+	}
+
+	public Boolean getAnomalyDetection() {
+		return anomalyDetection;
+	}
+
+	public void setAnomalyDetection(Boolean anomalyDetection) {
+		this.anomalyDetection = anomalyDetection;
+	}
+
+	public Boolean getCurrentData() {
+		return currentData;
+	}
+
+	public void setCurrentData(Boolean currentData) {
+		this.currentData = currentData;
+	}
+
+	public Boolean getExpedite() {
+		return expedite;
+	}
+
+	public void setExpedite(Boolean expedite) {
+		this.expedite = expedite;
+	}
+
+	public ReportDescriptionElementDataEncoding getElementDataEncoding() {
+		return elementDataEncoding;
+	}
+
+	public void setElementDataEncoding(ReportDescriptionElementDataEncoding elementDataEncoding) {
+		this.elementDataEncoding = elementDataEncoding;
+	}
 
 }
