@@ -1,70 +1,46 @@
 package com.adobe.analytics.client.domain;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AddLogin {
 
-	private Integer admin;
-
-	private Integer changePassword;
-
-	private Integer createDashboards;
-
-	private String dashboardRsid;
+	private boolean createDashboards;
 
 	private String email;
 
 	private String firstName;
 
+	private List<String> groupName;
+
+	private boolean isAdmin;
+
+	private boolean isTemp;
+
 	private String lastName;
 
 	private String login;
+
+	private boolean mustChangePassword;
 
 	private String password;
 
 	private String phoneNumber;
 
-	private List<PermissionGroup> selectedGroupList;
+	private String rsid;
 
-	private Integer tempLogin;
+	private Date tempEndDate;
 
-	private Calendar tempLoginEnd;
-
-	private Calendar tempLoginStart;
+	private Date tempStartDate;
 
 	private String title;
 
-	public Integer getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(Integer admin) {
-		this.admin = admin;
-	}
-
-	public Integer getChangePassword() {
-		return changePassword;
-	}
-
-	public void setChangePassword(Integer changePassword) {
-		this.changePassword = changePassword;
-	}
-
-	public Integer getCreateDashboards() {
+	public boolean isCreateDashboards() {
 		return createDashboards;
 	}
 
-	public void setCreateDashboards(Integer createDashboards) {
+	public void setCreateDashboards(boolean createDashboards) {
 		this.createDashboards = createDashboards;
-	}
-
-	public String getDashboardRsid() {
-		return dashboardRsid;
-	}
-
-	public void setDashboardRsid(String dashboardRsid) {
-		this.dashboardRsid = dashboardRsid;
 	}
 
 	public String getEmail() {
@@ -83,6 +59,30 @@ public class AddLogin {
 		this.firstName = firstName;
 	}
 
+	public List<String> getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(List<String> groupName) {
+		this.groupName = groupName;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public boolean isTemp() {
+		return isTemp;
+	}
+
+	public void setTemp(boolean isTemp) {
+		this.isTemp = isTemp;
+	}
+
 	public String getLastName() {
 		return lastName;
 	}
@@ -97,6 +97,14 @@ public class AddLogin {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+
+	public boolean isMustChangePassword() {
+		return mustChangePassword;
+	}
+
+	public void setMustChangePassword(boolean mustChangePassword) {
+		this.mustChangePassword = mustChangePassword;
 	}
 
 	public String getPassword() {
@@ -115,36 +123,28 @@ public class AddLogin {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public List<PermissionGroup> getSelectedGroupList() {
-		return selectedGroupList;
+	public String getRsid() {
+		return rsid;
 	}
 
-	public void setSelectedGroupList(List<PermissionGroup> selectedGroupList) {
-		this.selectedGroupList = selectedGroupList;
+	public void setRsid(String rsid) {
+		this.rsid = rsid;
 	}
 
-	public Integer getTempLogin() {
-		return tempLogin;
+	public Date getTempEndDate() {
+		return tempEndDate;
 	}
 
-	public void setTempLogin(Integer tempLogin) {
-		this.tempLogin = tempLogin;
+	public void setTempEndDate(Date tempEndDate) {
+		this.tempEndDate = tempEndDate;
 	}
 
-	public Calendar getTempLoginEnd() {
-		return tempLoginEnd;
+	public Date getTempStartDate() {
+		return tempStartDate;
 	}
 
-	public void setTempLoginEnd(Calendar tempLoginEnd) {
-		this.tempLoginEnd = tempLoginEnd;
-	}
-
-	public Calendar getTempLoginStart() {
-		return tempLoginStart;
-	}
-
-	public void setTempLoginStart(Calendar tempLoginStart) {
-		this.tempLoginStart = tempLoginStart;
+	public void setTempStartDate(Date tempStartDate) {
+		this.tempStartDate = tempStartDate;
 	}
 
 	public String getTitle() {
@@ -155,12 +155,4 @@ public class AddLogin {
 		this.title = title;
 	}
 
-	@Override
-	public String toString() {
-		return String
-				.format("AddLogin [admin=%s, changePassword=%s, createDashboards=%s, dashboardRsid=%s, email=%s, firstName=%s, lastName=%s, login=%s, password=%s, phoneNumber=%s, selectedGroupList=%s, tempLogin=%s, tempLoginEnd=%s, tempLoginStart=%s, title=%s]",
-						admin, changePassword, createDashboards, dashboardRsid, email, firstName, lastName,
-						login, password, phoneNumber, selectedGroupList, tempLogin, tempLoginEnd,
-						tempLoginStart, title);
-	}
 }

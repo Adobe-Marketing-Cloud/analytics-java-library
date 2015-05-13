@@ -15,8 +15,8 @@ public class PermissionsMethods {
 		this.client = client;
 	}
 
-	public int addLogin(AddLogin request) throws IOException {
+	public boolean addLogin(AddLogin request) throws IOException {
 		Type type = new TypeToken<Integer>() {}.getType();
-		return client.callMethod("Permissions.AddLogin", request, type);
+		return Integer.valueOf(1).equals(client.callMethod("Permissions.AddLogin", request, type));
 	}
 }
