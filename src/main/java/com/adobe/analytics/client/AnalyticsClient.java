@@ -37,7 +37,9 @@ public class AnalyticsClient {
 	}
 
 	public <T> T callMethod(String method, Object data, Type resultType) throws IOException {
-		return GSON.fromJson(callMethod(method, GSON.toJson(data)), resultType);
+		final String request = GSON.toJson(data);
+		final String response = callMethod(method, request);
+		return GSON.fromJson(response, resultType);
 	}
 
 	public String callMethod(String method, String data) throws IOException {
