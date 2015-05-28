@@ -21,7 +21,7 @@ Add following dependency to your `pom.xml`:
 `AnalyticsClient` class allows to make requests to the analytics API.
 Its constructor accepts username, password and the endpoint name:
 
-    AnalyticsClient client = new AnalyticsClient("my-username", "my-password", "api2.omniture.com");
+    AnalyticsClient client = AnalyticsClient.authenticateWithSecret("my-username", "my-password", "api2.omniture.com");
 
 ### Reading the report suite configuration
 
