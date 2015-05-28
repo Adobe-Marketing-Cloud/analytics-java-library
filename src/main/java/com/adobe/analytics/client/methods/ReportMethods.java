@@ -1,6 +1,6 @@
 package com.adobe.analytics.client.methods;
 
-import static com.adobe.analytics.client.JsonUtil.m;
+import static com.adobe.analytics.client.JsonUtil.o;
 
 import java.io.IOException;
 
@@ -18,12 +18,12 @@ public class ReportMethods {
 	}
 
 	public int queue(ReportDescription reportDesc) throws IOException {
-		final JsonObject response = client.callMethod("Report.Queue", m("reportDescription", reportDesc),
+		final JsonObject response = client.callMethod("Report.Queue", o("reportDescription", reportDesc),
 				JsonObject.class);
 		return response.get("reportID").getAsInt();
 	}
 
 	public ReportResponse get(int reportId) throws IOException {
-		return client.callMethod("Report.Get", m("reportID", reportId), ReportResponse.class);
+		return client.callMethod("Report.Get", o("reportID", reportId), ReportResponse.class);
 	}
 }

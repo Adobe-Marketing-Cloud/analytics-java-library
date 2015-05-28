@@ -1,7 +1,7 @@
 package com.adobe.analytics.client.methods;
 
-import static com.adobe.analytics.client.JsonUtil.l;
-import static com.adobe.analytics.client.JsonUtil.m;
+import static com.adobe.analytics.client.JsonUtil.a;
+import static com.adobe.analytics.client.JsonUtil.o;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -22,16 +22,16 @@ public class ReportSuiteMethods {
 	}
 
 	public CompanyReportSuites getReportSuites() throws IOException {
-		return client.callMethod("Company.GetReportSuites", m("types", l("standard")), CompanyReportSuites.class);
+		return client.callMethod("Company.GetReportSuites", o("types", a("standard")), CompanyReportSuites.class);
 	}
 
 	public List<ReportSuiteEvars> getEvars(String... rsid) throws IOException {
 		final Type type = new TypeToken<List<ReportSuiteEvars>>() {}.getType();
-		return client.callMethod("ReportSuite.GetEvars", m("rsid_list", rsid), type);
+		return client.callMethod("ReportSuite.GetEvars", o("rsid_list", rsid), type);
 	}
 
 	public List<ReportSuiteProps> getProps(String... rsid) throws IOException {
 		final Type type = new TypeToken<List<ReportSuiteProps>>() {}.getType();
-		return client.callMethod("ReportSuite.GetProps", m("rsid_list", rsid), type);
+		return client.callMethod("ReportSuite.GetProps", o("rsid_list", rsid), type);
 	}
 }

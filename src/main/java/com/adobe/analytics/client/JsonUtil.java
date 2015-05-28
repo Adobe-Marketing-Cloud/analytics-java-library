@@ -17,7 +17,7 @@ public class JsonUtil {
 	private JsonUtil() {
 	}
 
-	public static Map<Object, Object> m(Object... values) {
+	public static Map<Object, Object> o(Object... values) {
 		final Map<Object, Object> map = new LinkedHashMap<>();
 		for (int i = 0; i < values.length - 1; i += 2) {
 			map.put(values[i], values[i + 1]);
@@ -25,7 +25,7 @@ public class JsonUtil {
 		return map;
 	}
 
-	public static List<Object> l(Object... values) {
+	public static List<Object> a(Object... values) {
 		return Arrays.asList(values);
 	}
 }
