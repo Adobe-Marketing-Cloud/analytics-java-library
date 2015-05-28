@@ -111,10 +111,10 @@ API. GSON library provides a convenient way to create a request and
 parse the result. For instance, we may use the raw JSONs to get the list
 of the report suites:
 
-		JsonObject request = new JsonObject();
-		JsonArray typeList = new JsonArray();
-		typeList.add(new JsonPrimitive("standard"));
-		request.add("types", typeList);
+    JsonObject request = new JsonObject();
+    JsonArray typeList = new JsonArray();
+    typeList.add(new JsonPrimitive("standard"));
+    request.add("types", typeList);
 
     JsonObject response = client.callMethod("Company.GetReportSuites", request, JsonObject.class);
     JsonArray suites = response.get("reportSuites").getAsJsonArray();
