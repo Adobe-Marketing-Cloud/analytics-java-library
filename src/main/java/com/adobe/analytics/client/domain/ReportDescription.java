@@ -1,5 +1,6 @@
 package com.adobe.analytics.client.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -106,12 +107,32 @@ public class ReportDescription {
 		return metrics;
 	}
 
+	public void setMetricIds(String... metricIds) {
+		List<ReportDescriptionMetric> newMetrics = new ArrayList<>();
+		for (final String id : metricIds) {
+			final ReportDescriptionMetric metric = new ReportDescriptionMetric();
+			metric.setId(id);
+			newMetrics.add(metric);
+		}
+		setMetrics(newMetrics);
+	}
+
 	public void setMetrics(List<ReportDescriptionMetric> metrics) {
 		this.metrics = metrics;
 	}
 
 	public List<ReportDescriptionElement> getElements() {
 		return elements;
+	}
+
+	public void setElementIds(String... elementIds) {
+		List<ReportDescriptionElement> newElements = new ArrayList<>();
+		for (final String id : elementIds) {
+			final ReportDescriptionElement element = new ReportDescriptionElement();
+			element.setId(id);
+			newElements.add(element);
+		}
+		setElements(newElements);
 	}
 
 	public void setElements(List<ReportDescriptionElement> elements) {
