@@ -129,3 +129,18 @@ objects and arrays: `o("k1", "v1", "k2", "v2", ...)` and `a("v1", "v2", "v3", ..
 
     Object request = o("types", a("standard"));
     JsonObject response = client.callMethod("Company.GetReportSuites", request, JsonObject.class);
+
+### JWT/OAuth authorization
+
+The library supports
+[service account authorization](https://marketing.adobe.com/developer/documentation/authentication-1/auth-service-account-1).
+In order to use it, you'll need:
+
+* a private key file,
+* client id,
+* username.
+
+Creating an `AnalyticsClient` authorized with OAuth is simple:
+
+    Path privateKeyPath = Paths.get("path/to/my/private/key.pem");
+    AnalyticsClient client = AnalyticsClient.authenticateWithOAuth(privateKeyPath, "my-client-id", "my-username", "api2.omniture.com");
