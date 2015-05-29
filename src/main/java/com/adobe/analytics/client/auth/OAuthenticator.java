@@ -8,8 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 
-import org.apache.commons.io.IOUtils;
-
+import com.adobe.analytics.client.ConnectionUtil;
 import com.adobe.analytics.client.JsonUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -38,12 +37,14 @@ public class OAuthenticator implements ClientAuthenticator {
 	}
 
 	public void login() throws JsonSyntaxException, IOException {
-		final String jwt = Jwts.builder().setIssuer(clientId).setSubject(username).setAudience(endpoint)
+		final String jwt = Jwts.builder()
+				.setIssuer(clientId)
+				.setSubject(username)
+				.setAudience(endpoint)
 				.signWith(SignatureAlgorithm.HS256, privateKey).compact();
-
 		final URL url = new URL(String.format(OAUTH_URL, endpoint, clientId, jwt));
 		final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		final JsonObject response = JsonUtil.GSON.fromJson(IOUtils.toString(connection.getInputStream()),
+		final JsonObject response = JsonUtil.GSON.fromJson(ConnectionUtil.readResponse(connection),
 				JsonObject.class);
 		accessToken = response.get("access_token").getAsString();
 		expires = Calendar.getInstance();
