@@ -1,66 +1,46 @@
 package com.adobe.analytics.client.auth;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Calendar;
-
-import com.adobe.analytics.client.ConnectionUtil;
-import com.adobe.analytics.client.JsonUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
-public class OAuthenticator implements ClientAuthenticator {
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.Calendar;
 
-	private static final String OAUTH_URL = "https://%s/token?grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&client_id=%s&assertion=%s";
+public abstract class OAuthenticator implements ClientAuthenticator {
 
-	private final byte[] privateKey;
+    private String accessToken;
 
-	private final String clientId;
+    private Calendar expires;
 
-	private final String username;
+    abstract void getToken() throws JsonSyntaxException, IOException;
 
-	private final String endpoint;
+    @Override
+    public void authenticate(HttpURLConnection connection) throws JsonSyntaxException, IOException {
+        if (!isTokenValid()) {
+            getToken();
+        }
+        connection.addRequestProperty("Authorization", String.format("Bearer %s", accessToken));
+    }
 
-	private String accessToken;
 
-	private Calendar expires;
+    private boolean isTokenValid() {
+        final Calendar now = Calendar.getInstance();
+        return accessToken != null && now.before(expires);
+    }
 
-	public OAuthenticator(byte[] privateKey, String clientId, String username, String endpoint) {
-		this.privateKey = privateKey;
-		this.clientId = clientId;
-		this.username = username;
-		this.endpoint = endpoint;
-	}
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
-	public void login() throws JsonSyntaxException, IOException {
-		final String jwt = Jwts.builder()
-				.setIssuer(clientId)
-				.setSubject(username)
-				.setAudience(endpoint)
-				.signWith(SignatureAlgorithm.HS256, privateKey).compact();
-		final URL url = new URL(String.format(OAUTH_URL, endpoint, clientId, jwt));
-		final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		final JsonObject response = JsonUtil.GSON.fromJson(ConnectionUtil.readResponse(connection),
-				JsonObject.class);
-		accessToken = response.get("access_token").getAsString();
-		expires = Calendar.getInstance();
-		expires.add(Calendar.SECOND, response.get("expires_in").getAsInt());
-	}
+    public void setExpires(Calendar expires) {
+        this.expires = expires;
+    }
 
-	@Override
-	public void authenticate(HttpURLConnection connection) throws JsonSyntaxException, IOException {
-		if (!isTokenValid()) {
-			login();
-		}
-		connection.addRequestProperty("Authorization", String.format("Bearer %s", accessToken));
-	}
-
-	private boolean isTokenValid() {
-		final Calendar now = Calendar.getInstance();
-		return accessToken != null && now.before(expires);
-	}
+    protected void getTokenJSONResponse(JsonObject response) {
+        setAccessToken(response.get("access_token").getAsString());
+        Calendar expires = Calendar.getInstance();
+        expires.add(Calendar.SECOND, response.get("expires_in").getAsInt());
+        setExpires(expires);
+    }
 }
