@@ -40,6 +40,6 @@ public class JWTOAuthenticator extends OAuthenticator {
 		final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		final JsonObject response = JsonUtil.GSON.fromJson(ConnectionUtil.readResponse(connection),
 				JsonObject.class);
-        getTokenJSONResponse(response);
+		getTokenJSONResponse(response);
 	}
 }

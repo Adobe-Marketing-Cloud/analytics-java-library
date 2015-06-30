@@ -27,18 +27,18 @@ public class AnalyticsClient {
 	}
 
 	public static AnalyticsClient authenticateWithJWTOAuth(Path privateKeyPath, String clientId,
-                                                           String username, String endpoint) throws IOException {
+														   String username, String endpoint) throws IOException {
 		return authenticateWithJWTOAuth(Files.readAllBytes(privateKeyPath), clientId, username, endpoint);
 	}
 
 	public static AnalyticsClient authenticateWithJWTOAuth(byte[] privateKey, String clientId, String username,
-                                                           String endpoint) {
+														   String endpoint) {
 		final ClientAuthenticator auth = new JWTOAuthenticator(privateKey, clientId, username, endpoint);
 		return new AnalyticsClient(auth, endpoint);
 	}
 
-    public static AnalyticsClient authenticateWithClientCredentialsOAuth(String clientId, String clientSecret,
-                                                           String endpoint) {
+	public static AnalyticsClient authenticateWithClientCredentialsOAuth(String clientId, String clientSecret,
+																		 String endpoint) {
 		final ClientAuthenticator auth = new ClientCredentialsOAuthenticator(clientId, clientSecret);
 		return new AnalyticsClient(auth, endpoint);
 	}

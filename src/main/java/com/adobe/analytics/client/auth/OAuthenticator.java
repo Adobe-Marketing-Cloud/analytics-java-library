@@ -9,38 +9,38 @@ import java.util.Calendar;
 
 public abstract class OAuthenticator implements ClientAuthenticator {
 
-    private String accessToken;
+	private String accessToken;
 
-    private Calendar expires;
+	private Calendar expires;
 
-    abstract void getToken() throws JsonSyntaxException, IOException;
+	abstract void getToken() throws JsonSyntaxException, IOException;
 
-    @Override
-    public void authenticate(HttpURLConnection connection) throws JsonSyntaxException, IOException {
-        if (!isTokenValid()) {
-            getToken();
-        }
-        connection.addRequestProperty("Authorization", String.format("Bearer %s", accessToken));
-    }
+	@Override
+	public void authenticate(HttpURLConnection connection) throws JsonSyntaxException, IOException {
+		if (!isTokenValid()) {
+			getToken();
+		}
+		connection.addRequestProperty("Authorization", String.format("Bearer %s", accessToken));
+	}
 
 
-    private boolean isTokenValid() {
-        final Calendar now = Calendar.getInstance();
-        return accessToken != null && now.before(expires);
-    }
+	private boolean isTokenValid() {
+		final Calendar now = Calendar.getInstance();
+		return accessToken != null && now.before(expires);
+	}
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+	private void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
 
-    public void setExpires(Calendar expires) {
-        this.expires = expires;
-    }
+	private void setExpires(Calendar expires) {
+		this.expires = expires;
+	}
 
-    protected void getTokenJSONResponse(JsonObject response) {
-        setAccessToken(response.get("access_token").getAsString());
-        Calendar expires = Calendar.getInstance();
-        expires.add(Calendar.SECOND, response.get("expires_in").getAsInt());
-        setExpires(expires);
-    }
+	protected void getTokenJSONResponse(JsonObject response) {
+		setAccessToken(response.get("access_token").getAsString());
+		Calendar expires = Calendar.getInstance();
+		expires.add(Calendar.SECOND, response.get("expires_in").getAsInt());
+		setExpires(expires);
+	}
 }
