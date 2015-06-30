@@ -1,7 +1,9 @@
 package com.adobe.analytics.client;
 
 import java.io.IOException;
+import java.net.Authenticator;
 import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.nio.file.Files;
@@ -66,6 +68,17 @@ public class AnalyticsClientBuilder {
 
 	public AnalyticsClientBuilder withProxy(String hostname, int port) {
 		this.proxy = new Proxy(Type.HTTP, new InetSocketAddress(hostname, port));
+		return this;
+	}
+
+	public AnalyticsClientBuilder withProxy(final String hostname, final int port, final String username, final String password) {
+		this.proxy = new Proxy(Type.HTTP, new InetSocketAddress(hostname, port));
+		final Authenticator authenticator = new Authenticator() {
+			public PasswordAuthentication getPasswordAuthentication() {
+				return (new PasswordAuthentication(username, password.toCharArray()));
+			}
+		};
+		Authenticator.setDefault(authenticator);
 		return this;
 	}
 
