@@ -25,6 +25,9 @@ public class AnalyticsClientBuilder {
 	}
 
 	public AnalyticsClientBuilder setEndpoint(String endpoint) {
+		if (endpoint == null) {
+			throw new NullPointerException("Endpoint can't be null");
+		}
 		authBuild.setEndpoint(endpoint);
 		this.endpoint = endpoint;
 		return this;
@@ -33,7 +36,6 @@ public class AnalyticsClientBuilder {
 	public AnalyticsClientBuilder authenticateWithSecret(String username, String secret) {
 		authBuild.setUsername(username);
 		authBuild.setSecret(secret);
-		authBuild.setEndpoint(endpoint);
 		authBuild.setType(AuthType.WSSE);
 		return this;
 	}

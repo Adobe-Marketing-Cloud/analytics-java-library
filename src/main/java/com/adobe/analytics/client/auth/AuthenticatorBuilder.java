@@ -23,36 +23,57 @@ public class AuthenticatorBuilder {
 	private Proxy proxy;
 
 	public AuthenticatorBuilder setType(AuthType type) {
+		if (type == null) {
+			throw new NullPointerException("Authentication type can't be null");
+		}
 		this.type = type;
 		return this;
 	}
 
 	public AuthenticatorBuilder setClientId(String clientId) {
+		if (type == null) {
+			throw new NullPointerException("ClientId can't be null");
+		}
 		this.clientId = clientId;
 		return this;
 	}
 
 	public AuthenticatorBuilder setUsername(String username) {
+		if (type == null) {
+			throw new NullPointerException("Username can't be null");
+		}
 		this.username = username;
 		return this;
 	}
 
 	public AuthenticatorBuilder setSecret(String secret) {
+		if (type == null) {
+			throw new NullPointerException("Secret can't be null");
+		}
 		this.secret = secret;
 		return this;
 	}
 
 	public AuthenticatorBuilder setPrivateKey(byte[] privateKey) {
+		if (type == null) {
+			throw new NullPointerException("Private key can't be null");
+		}
 		this.privateKey = privateKey;
 		return this;
 	}
 
 	public AuthenticatorBuilder setEndpoint(String endpoint) {
+		if (type == null) {
+			throw new NullPointerException("Endpoint can't be null");
+		}
 		this.endpoint = endpoint;
 		return this;
 	}
 
 	public AuthenticatorBuilder setProxy(Proxy proxy) {
+		if (type == null) {
+			throw new NullPointerException("Proxy can't be null");
+		}
 		this.proxy = proxy;
 		return this;
 	}
