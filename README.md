@@ -144,5 +144,14 @@ In order to use it, you'll need:
 
 Creating an `AnalyticsClient` authorized with OAuth is simple:
 
-    Path privateKeyPath = Paths.get("path/to/my/private/key.pem");
-    AnalyticsClient client = AnalyticsClient.authenticateWithOAuth(privateKeyPath, "my-client-id", "my-username", "api2.omniture.com");
+    AnalyticsClient client = new AnalyticsClientBuilder()
+        .setEndpoint("api2.omniture.com")
+        .authenticateWithJWTOAuth(privateKeyPath, "my-client-id", "my-username")
+        .build();
+
+OAuth authentication using the credentials is possible as well:
+
+    AnalyticsClient client = new AnalyticsClientBuilder()
+        .setEndpoint("api2.omniture.com")
+        .authenticateWithClientCredentialsOAuth("my-client-id", "my-secret")
+        .build();
