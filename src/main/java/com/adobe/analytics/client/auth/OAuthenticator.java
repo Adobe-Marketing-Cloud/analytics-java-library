@@ -13,7 +13,7 @@ public abstract class OAuthenticator implements ClientAuthenticator {
 
 	private Calendar expires;
 
-	abstract void getToken() throws JsonSyntaxException, IOException;
+	protected abstract void getToken() throws JsonSyntaxException, IOException;
 
 	@Override
 	public void authenticate(HttpURLConnection connection) throws JsonSyntaxException, IOException {
@@ -22,7 +22,6 @@ public abstract class OAuthenticator implements ClientAuthenticator {
 		}
 		connection.addRequestProperty("Authorization", String.format("Bearer %s", accessToken));
 	}
-
 
 	private boolean isTokenValid() {
 		final Calendar now = Calendar.getInstance();
