@@ -4,11 +4,13 @@ import com.adobe.analytics.client.ConnectionUtil;
 import com.adobe.analytics.client.JsonUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.net.URL;
 
 public class JWTOAuthenticator extends OAuthenticator {
@@ -23,21 +25,24 @@ public class JWTOAuthenticator extends OAuthenticator {
 
 	private final String endpoint;
 
-	public JWTOAuthenticator(byte[] privateKey, String clientId, String username, String endpoint) {
+	private final Proxy proxy;
+
+	public JWTOAuthenticator(byte[] privateKey, String clientId, String username, String endpoint, Proxy proxy) {
 		this.privateKey = privateKey;
 		this.clientId = clientId;
 		this.username = username;
 		this.endpoint = endpoint;
+		this.proxy = proxy;
 	}
 
-	public void getToken() throws JsonSyntaxException, IOException {
+	protected void getToken() throws JsonSyntaxException, IOException {
 		final String jwt = Jwts.builder()
 				.setIssuer(clientId)
 				.setSubject(username)
 				.setAudience(endpoint)
 				.signWith(SignatureAlgorithm.HS256, privateKey).compact();
 		final URL url = new URL(String.format(OAUTH_URL, endpoint, clientId, jwt));
-		final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		final HttpURLConnection connection = (HttpURLConnection) url.openConnection(proxy);
 		final JsonObject response = JsonUtil.GSON.fromJson(ConnectionUtil.readResponse(connection),
 				JsonObject.class);
 		getTokenJSONResponse(response);

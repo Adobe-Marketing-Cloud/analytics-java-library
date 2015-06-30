@@ -4,32 +4,40 @@ import com.adobe.analytics.client.ConnectionUtil;
 import com.adobe.analytics.client.JsonUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
+import java.net.Proxy;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 public class ClientCredentialsOAuthenticator extends OAuthenticator {
-	private static final String OAUTH_URL = "https://api.omniture.com/token";
+	private static final String OAUTH_URL = "https://%s/token";
 
 	private final String clientId;
 
 	private final String clientSecret;
 
-	public ClientCredentialsOAuthenticator(String clientId, String clientSecret) {
+	private final String endpoint;
+
+	private final Proxy proxy;
+
+	public ClientCredentialsOAuthenticator(String clientId, String clientSecret, String endpoint, Proxy proxy) {
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
+		this.endpoint = endpoint;
+		this.proxy = proxy;
 	}
 
 	@Override
-	public void getToken() throws JsonSyntaxException, IOException {
-		URL url = new URL(OAUTH_URL);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	protected void getToken() throws JsonSyntaxException, IOException {
+		URL url = new URL(String.format(OAUTH_URL, endpoint));
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
 		setupPostRequest(conn);
 		final JsonObject response = JsonUtil.GSON.fromJson(ConnectionUtil.readResponse(conn),
 				JsonObject.class);
