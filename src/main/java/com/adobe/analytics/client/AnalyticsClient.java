@@ -4,11 +4,14 @@ import com.adobe.analytics.client.auth.ClientAuthenticator;
 import com.adobe.analytics.client.auth.ClientCredentialsOAuthenticator;
 import com.adobe.analytics.client.auth.JWTOAuthenticator;
 import com.adobe.analytics.client.auth.WsseAuthenticator;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +19,8 @@ import java.nio.file.Path;
 import static com.adobe.analytics.client.JsonUtil.GSON;
 
 public class AnalyticsClient {
+
+	private final Proxy proxy;
 
 	private final ClientAuthenticator authenticator;
 
@@ -44,8 +49,13 @@ public class AnalyticsClient {
 	}
 
 	private AnalyticsClient(ClientAuthenticator authenticator, String endpoint) {
+		this(authenticator, endpoint, null);
+	}
+	
+	private AnalyticsClient(ClientAuthenticator authenticator, String endpoint, Proxy proxy) {
 		this.authenticator = authenticator;
 		this.endpoint = endpoint;
+		this.proxy = proxy;
 	}
 
 	public <T> T callMethod(String method, Object data, Type resultType) throws IOException {
@@ -56,11 +66,21 @@ public class AnalyticsClient {
 
 	public String callMethod(String method, String data) throws IOException {
 		final URL url = new URL(String.format("https://%s/admin/1.4/rest/?method=%s", endpoint, method));
-		final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		final HttpURLConnection connection;
+		if (proxy == null) {
+			connection = (HttpURLConnection) url.openConnection();
+		} else {
+			connection = (HttpURLConnection) url.openConnection(proxy);
+		}
 		authenticator.authenticate(connection);
 		connection.setDoOutput(true);
 
 		IOUtils.write(data, connection.getOutputStream());
 		return ConnectionUtil.readResponse(connection);
+	}
+
+	public AnalyticsClient withProxy(String hostname, int port) {
+		final Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostname, port));
+		return new AnalyticsClient(authenticator, hostname, proxy);
 	}
 }
