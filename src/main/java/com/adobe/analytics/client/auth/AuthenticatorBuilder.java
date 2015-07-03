@@ -2,6 +2,9 @@ package com.adobe.analytics.client.auth;
 
 import java.net.Proxy;
 
+import com.adobe.analytics.client.auth.oauth.ClientCredentials;
+import com.adobe.analytics.client.auth.oauth.JwtBearer;
+
 public class AuthenticatorBuilder {
 
 	public enum AuthType {
@@ -80,14 +83,14 @@ public class AuthenticatorBuilder {
 
 	public ClientAuthenticator build() {
 		switch (type) {
-			case CREDENTIALS_OAUTH:
-				return new ClientCredentialsOAuthenticator(clientId, secret, endpoint, proxy);
+		case CREDENTIALS_OAUTH:
+			return new OAuthenticator(new ClientCredentials(clientId, secret), endpoint, proxy);
 
-			case JWTO_OAUTH:
-				return new JWTOAuthenticator(privateKey, clientId, username, endpoint, proxy);
+		case JWTO_OAUTH:
+			return new OAuthenticator(new JwtBearer(privateKey, clientId, username, endpoint), endpoint, proxy);
 
-			case WSSE:
-				return new WsseAuthenticator(username, secret);
+		case WSSE:
+			return new WsseAuthenticator(username, secret);
 		}
 		throw new IllegalStateException("Authentication type hasn't been chosen: " + type);
 	}

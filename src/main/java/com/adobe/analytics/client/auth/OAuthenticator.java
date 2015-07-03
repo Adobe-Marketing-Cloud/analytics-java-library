@@ -1,19 +1,42 @@
 package com.adobe.analytics.client.auth;
 
+import com.adobe.analytics.client.ConnectionUtil;
+import com.adobe.analytics.client.JsonUtil;
+import com.adobe.analytics.client.auth.oauth.GrantType;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
+import java.util.Map;
+import java.util.Map.Entry;
 
-public abstract class OAuthenticator implements ClientAuthenticator {
+import org.apache.commons.io.IOUtils;
+
+public class OAuthenticator implements ClientAuthenticator {
+
+	private static final String OAUTH_URL = "https://%s/token";
+
+	private final String endpoint;
+
+	private final Proxy proxy;
+
+	private final GrantType grantType;
 
 	private String accessToken;
 
 	private Calendar expires;
 
-	protected abstract void getToken() throws JsonSyntaxException, IOException;
+	public OAuthenticator(GrantType grantType, String endpoint, Proxy proxy) {
+		this.endpoint = endpoint;
+		this.proxy = proxy;
+		this.grantType = grantType;
+	}
 
 	@Override
 	public void authenticate(HttpURLConnection connection) throws JsonSyntaxException, IOException {
@@ -28,18 +51,37 @@ public abstract class OAuthenticator implements ClientAuthenticator {
 		return accessToken != null && now.before(expires);
 	}
 
-	private void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
-	}
-
-	private void setExpires(Calendar expires) {
-		this.expires = expires;
-	}
-
-	protected void getTokenJSONResponse(JsonObject response) {
-		setAccessToken(response.get("access_token").getAsString());
-		Calendar expires = Calendar.getInstance();
+	private void getToken() throws JsonSyntaxException, IOException {
+		final URL url = new URL(String.format(OAUTH_URL, endpoint));
+		final HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
+		setupPostRequest(conn);
+		final JsonObject response = JsonUtil.GSON.fromJson(ConnectionUtil.readResponse(conn), JsonObject.class);
+		accessToken = response.get("access_token").getAsString();
+		expires = Calendar.getInstance();
 		expires.add(Calendar.SECOND, response.get("expires_in").getAsInt());
-		setExpires(expires);
+	}
+
+	private void setupPostRequest(HttpURLConnection conn) throws IOException {
+		conn.setDoOutput(true);
+		conn.setRequestMethod("POST");
+		addPostParams(conn, grantType.getParameters());
+		grantType.processRequest(conn);
+	}
+
+	private void addPostParams(HttpURLConnection conn, Map<String, String> parameters) throws IOException {
+		StringBuilder result = new StringBuilder();
+		boolean first = true;
+
+		for (Entry<String, String> pair : parameters.entrySet()) {
+			if (first)
+				first = false;
+			else
+				result.append("&");
+
+			result.append(URLEncoder.encode(pair.getKey(), StandardCharsets.UTF_8.name()));
+			result.append("=");
+			result.append(URLEncoder.encode(pair.getValue(), StandardCharsets.UTF_8.name()));
+		}
+		IOUtils.write(result.toString(), conn.getOutputStream());
 	}
 }
