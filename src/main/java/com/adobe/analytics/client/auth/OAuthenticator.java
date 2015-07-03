@@ -53,7 +53,12 @@ public class OAuthenticator implements ClientAuthenticator {
 
 	private void getToken() throws JsonSyntaxException, IOException {
 		final URL url = new URL(String.format(OAUTH_URL, endpoint));
-		final HttpURLConnection conn = (HttpURLConnection) url.openConnection(proxy);
+		final HttpURLConnection conn;
+		if (proxy == null) {
+			conn = (HttpURLConnection) url.openConnection();
+		} else {
+			conn = (HttpURLConnection) url.openConnection(proxy);
+		}
 		setupPostRequest(conn);
 		final JsonObject response = JsonUtil.GSON.fromJson(ConnectionUtil.readResponse(conn), JsonObject.class);
 		accessToken = response.get("access_token").getAsString();

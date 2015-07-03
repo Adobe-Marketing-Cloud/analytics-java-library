@@ -35,7 +35,11 @@ public class AnalyticsClient {
 	public String callMethod(String method, String data) throws IOException {
 		final URL url = new URL(String.format("https://%s/admin/1.4/rest/?method=%s", endpoint, method));
 		final HttpURLConnection connection;
-		connection = (HttpURLConnection) url.openConnection(proxy);
+		if (proxy == null) {
+			connection = (HttpURLConnection) url.openConnection();
+		} else {
+			connection = (HttpURLConnection) url.openConnection(proxy);
+		}
 		authenticator.authenticate(connection);
 		connection.setDoOutput(true);
 

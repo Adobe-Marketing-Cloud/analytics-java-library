@@ -21,9 +21,7 @@ public class AnalyticsClientBuilder {
 	private Proxy proxy;
 
 	public AnalyticsClientBuilder() {
-		proxy = new Proxy(Type.DIRECT, null);
 		authBuild = new AuthenticatorBuilder();
-		authBuild.setProxy(proxy);
 	}
 
 	public AnalyticsClientBuilder setEndpoint(String endpoint) {
@@ -68,11 +66,12 @@ public class AnalyticsClientBuilder {
 
 	public AnalyticsClientBuilder withProxy(String hostname, int port) {
 		this.proxy = new Proxy(Type.HTTP, new InetSocketAddress(hostname, port));
+		authBuild.setProxy(proxy);
 		return this;
 	}
 
 	public AnalyticsClientBuilder withProxy(final String hostname, final int port, final String username, final String password) {
-		this.proxy = new Proxy(Type.HTTP, new InetSocketAddress(hostname, port));
+		withProxy(hostname, port);
 		final Authenticator authenticator = new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
 				return (new PasswordAuthentication(username, password.toCharArray()));
