@@ -69,8 +69,8 @@ public class OAuthenticator implements ClientAuthenticator {
 	private void setupPostRequest(HttpURLConnection conn) throws IOException {
 		conn.setDoOutput(true);
 		conn.setRequestMethod("POST");
-		addPostParams(conn, grantType.getParameters());
 		grantType.processRequest(conn);
+		addPostParams(conn, grantType.getParameters());
 	}
 
 	private void addPostParams(HttpURLConnection conn, Map<String, String> parameters) throws IOException {
