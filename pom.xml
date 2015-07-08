@@ -36,7 +36,7 @@
 							*
 						</Import-Package>
 						<Export-Package>com.adobe.analytics.client*</Export-Package>
-						<Embed-Dependency>gson,jjwt,jackson-*</Embed-Dependency>
+						<Embed-Dependency>gson,jjwt,jackson-*,commons-codec</Embed-Dependency>
 					</instructions>
 				</configuration>
 			</plugin>
