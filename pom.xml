@@ -11,6 +11,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<scm>
+		<url>https://github.com/Adobe-Marketing-Cloud/analytics-java-library</url>
+		<connection>scm:git:git@github.com:Adobe-Marketing-Cloud/analytics-java-library.git</connection>
+		<developerConnection>scm:git:git@github.com:Adobe-Marketing-Cloud/analytics-java-library.git</developerConnection>
+	</scm>
+
 	<build>
 		<plugins>
 			<plugin>
