@@ -10,7 +10,6 @@ import java.util.Map;
 
 import com.adobe.analytics.client.AnalyticsClient;
 import com.adobe.analytics.client.domain.BookmarkFolder;
-import com.adobe.analytics.client.domain.BookmarkFoldersResponse;
 import com.adobe.analytics.client.domain.CompanyReportSuites;
 import com.adobe.analytics.client.domain.ReportSuiteEvars;
 import com.adobe.analytics.client.domain.ReportSuiteProps;

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Bookmark {
 
-
 	@SerializedName("rsid")
 	private String rsid;
 

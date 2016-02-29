@@ -33,4 +33,5 @@ public class BookmarkFolder {
 	
 	@SerializedName("bookmarks")
 	private List<Bookmark> bookmarks;
+
 }
