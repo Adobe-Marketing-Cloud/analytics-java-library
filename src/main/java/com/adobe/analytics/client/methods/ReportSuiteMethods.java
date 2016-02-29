@@ -6,8 +6,11 @@ import static com.adobe.analytics.client.JsonUtil.o;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import com.adobe.analytics.client.AnalyticsClient;
+import com.adobe.analytics.client.domain.BookmarkFolder;
+import com.adobe.analytics.client.domain.BookmarkFoldersResponse;
 import com.adobe.analytics.client.domain.CompanyReportSuites;
 import com.adobe.analytics.client.domain.ReportSuiteEvars;
 import com.adobe.analytics.client.domain.ReportSuiteProps;
@@ -33,5 +36,12 @@ public class ReportSuiteMethods {
 	public List<ReportSuiteProps> getProps(String... rsid) throws IOException {
 		final Type type = new TypeToken<List<ReportSuiteProps>>() {}.getType();
 		return client.callMethod("ReportSuite.GetProps", o("rsid_list", rsid), type);
+	}
+	
+	public List<BookmarkFolder> getBookmarksFolders(String... rsid) throws IOException {
+		//TODO should it handle offset and limits?
+		final Type type = new TypeToken<Map<String, List<BookmarkFolder>>>() {}.getType();
+		Map<String, List<BookmarkFolder>> foldersResponseMap = client.callMethod("Bookmark.GetBookmarks", null, type);
+		return foldersResponseMap.get("folders");
 	}
 }
