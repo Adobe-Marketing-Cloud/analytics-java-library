@@ -91,9 +91,9 @@ method in a loop, waiting until the report is ready:
 More information about preparing a report can be found in the Adobe
 analytics [documentation](https://marketing.adobe.com/developer/documentation/analytics-reporting-1-4/get-started).
 
-### Iterating over bookmarked reports
-Sometimes it's more convenient to fetch a ReportDescription directly from an existing bookmarked report on the Analytics website.  
-Here is how to iterate over the bookmarks:
+### Iterating bookmarked reports
+Sometimes it's useful to get a ReportDescription directly from an existing bookmarked report on the Analytics website.  
+How to iterate bookmarks:
 
     ReportSuiteMethods suiteMethods = new ReportSuiteMethods(client); //client is created as above
     List<BookmarkFolder> folders = suiteMethods.getBookmarksFolders();
