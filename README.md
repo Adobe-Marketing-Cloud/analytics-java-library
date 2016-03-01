@@ -101,7 +101,7 @@ How to iterate bookmarks:
         System.out.println("Bookmarked reports in folder " + folder.getName());
         for (Bookmark bookmark : folder.getBookmarks()) {
             System.out.println("  " + bookmark.getName());
-            ReportDescription desc = bookmark.getDescription();
+            ReportDescription desc = bookmark.getReportDescription();
             // now it's possible to pass the desc object to the API queue method  
             // in order to get the actual report, as shown above.
         }
