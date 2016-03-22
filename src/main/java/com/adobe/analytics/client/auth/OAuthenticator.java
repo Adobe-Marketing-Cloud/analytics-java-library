@@ -81,10 +81,10 @@ public class OAuthenticator implements ClientAuthenticator {
 			if (first)
 				first = false;
 			else
-				result.append("&");
+				result.append('&');
 
 			result.append(URLEncoder.encode(pair.getKey(), StandardCharsets.UTF_8.name()));
-			result.append("=");
+			result.append('=');
 			result.append(URLEncoder.encode(pair.getValue(), StandardCharsets.UTF_8.name()));
 		}
 		IOUtils.write(result.toString(), conn.getOutputStream());
