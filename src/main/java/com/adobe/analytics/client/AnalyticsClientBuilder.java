@@ -14,7 +14,7 @@ import com.adobe.analytics.client.auth.AuthenticatorBuilder.AuthType;
 
 public class AnalyticsClientBuilder {
 
-	private AuthenticatorBuilder authBuild;
+	private final AuthenticatorBuilder authBuild;
 
 	private String endpoint;
 
@@ -74,7 +74,7 @@ public class AnalyticsClientBuilder {
 		withProxy(hostname, port);
 		final Authenticator authenticator = new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
-				return (new PasswordAuthentication(username, password.toCharArray()));
+				return new PasswordAuthentication(username, password.toCharArray());
 			}
 		};
 		Authenticator.setDefault(authenticator);
