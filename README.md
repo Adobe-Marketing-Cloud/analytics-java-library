@@ -9,7 +9,7 @@ A Java client library for the [Analytics APIs](https://marketing.adobe.com/devel
 Add following dependency to your `pom.xml`:
 
     <dependency>
-        <groupId>com.adobe.analytics</groupId>
+        <groupId>com.adobe.granite.analytics</groupId>
         <artifactId>java-client</artifactId>
         <version>1.0-SNAPSHOT</version>
     </dependency>
