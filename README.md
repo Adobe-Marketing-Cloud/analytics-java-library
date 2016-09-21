@@ -1,7 +1,5 @@
 # Analytics Java library
 
-[![Build Status](https://travis-ci.org/Adobe-Marketing-Cloud/analytics-java-library.svg?branch=master)](https://travis-ci.org/Adobe-Marketing-Cloud/analytics-java-library)
-
 A Java client library for the [Analytics APIs](https://marketing.adobe.com/developer/documentation).
 
 ## Integration
