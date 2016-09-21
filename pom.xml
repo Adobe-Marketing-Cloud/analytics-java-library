@@ -14,14 +14,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.adobe.granite.analytics</groupId>
     <artifactId>java-client</artifactId>
     <packaging>bundle</packaging>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>java-client</name>
 
     <properties>
@@ -32,7 +30,7 @@
         <url>https://github.com/Adobe-Marketing-Cloud/analytics-java-library</url>
         <connection>scm:git:git@github.com:Adobe-Marketing-Cloud/analytics-java-library.git</connection>
         <developerConnection>scm:git:git@github.com:Adobe-Marketing-Cloud/analytics-java-library.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>java-client-1.1</tag>
     </scm>
 
     <build>
