@@ -89,6 +89,28 @@ method in a loop, waiting until the report is ready:
 More information about preparing a report can be found in the Adobe
 analytics [documentation](https://marketing.adobe.com/developer/documentation/analytics-reporting-1-4/get-started).
 
+### Iterating bookmarked reports
+Sometimes it's useful to get a ReportDescription directly from an existing bookmarked report on the Analytics website.  
+How to iterate bookmarks:
+
+    ReportSuiteMethods suiteMethods = new ReportSuiteMethods(client); //client is created as above
+    List<BookmarkFolder> folders = suiteMethods.getBookmarksFolders();
+    for (BookmarkFolder folder : folders) {
+        System.out.println("Bookmarked reports in folder " + folder.getName());
+        for (Bookmark bookmark : folder.getBookmarks()) {
+            System.out.println("  " + bookmark.getName());
+            ReportDescription desc = bookmark.getReportDescription();
+            // now it's possible to pass the desc object to the API queue method  
+            // in order to get the actual report, as shown above.
+        }
+    }
+  
+### Getting a bookmarked report by name
+It's also possible to get a bookmarked report directly by name:
+
+    ReportSuiteMethods suiteMethods = new ReportSuiteMethods(client); //client is created as above
+    ReportDescription desc = suiteMethods.getReportDescriptionByBookmarkName("your-bookmark-name");
+
 ### Adding an user
 
 `PermissionsMethods` class allows to create a new user:
