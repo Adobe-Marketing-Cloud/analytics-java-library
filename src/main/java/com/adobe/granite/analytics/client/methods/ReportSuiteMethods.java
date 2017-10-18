@@ -13,6 +13,7 @@ import com.adobe.granite.analytics.client.AnalyticsClient;
 import com.adobe.granite.analytics.client.domain.CompanyReportSuites;
 import com.adobe.granite.analytics.client.domain.ReportDescription;
 import com.adobe.granite.analytics.client.domain.ReportSuiteEvars;
+import com.adobe.granite.analytics.client.domain.ReportSuiteEvents;
 import com.adobe.granite.analytics.client.domain.ReportSuiteProps;
 import com.adobe.analytics.client.domain.Bookmark;
 import com.adobe.analytics.client.domain.BookmarkFolder;
@@ -43,6 +44,11 @@ public class ReportSuiteMethods {
 		return client.callMethod("ReportSuite.GetProps", o("rsid_list", rsid), type);
 	}
 	
+	public List<ReportSuiteEvents> getEvents(String... rsid) throws IOException {
+		final Type type = new TypeToken<List<ReportSuiteEvents>>() {}.getType();
+		return client.callMethod("ReportSuite.GetEvents", o("rsid_list", rsid), type);
+	}
+
 	public List<BookmarkFolder> getBookmarksFolders() throws IOException {
 		//TODO
 		// - should it handle offset and limits?
