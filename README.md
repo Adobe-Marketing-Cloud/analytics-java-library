@@ -11,7 +11,7 @@ Add following dependency to your `pom.xml`:
         <artifactId>java-client</artifactId>
         <version>1.1</version>
     </dependency>
-
+ 
 ## Usage
 
 ### Creating the AnalyticsClient instance
