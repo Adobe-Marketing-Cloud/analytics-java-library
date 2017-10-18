@@ -91,6 +91,9 @@ public class AuthenticatorBuilder {
 
 		case WSSE:
 			return new WsseAuthenticator(username, secret);
+
+		default:
+			break;
 		}
 		throw new IllegalStateException("Authentication type hasn't been chosen: " + type);
 	}
