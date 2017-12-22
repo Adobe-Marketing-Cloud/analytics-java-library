@@ -59,7 +59,10 @@
                             !org.bouncycastle.jce*,
                             *
                         </Import-Package>
-                        <Export-Package>com.adobe.granite.analytics.client*</Export-Package>
+                        <Export-Package>
+                            com.adobe.granite.analytics.client*,
+                            com.adobe.analytics.client*
+                        </Export-Package>
                         <Embed-Dependency>gson,jjwt,jackson-*,commons-codec</Embed-Dependency>
                     </instructions>
                 </configuration>
