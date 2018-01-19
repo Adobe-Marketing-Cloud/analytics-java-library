@@ -9,8 +9,10 @@ Add following dependency to your `pom.xml`:
     <dependency>
         <groupId>com.adobe.granite.analytics</groupId>
         <artifactId>java-client</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </dependency>
+    
+Also, you may need to configure the Maven setup to access [Adobe Public Maven Repository|https://repo.adobe.com/].
 
 ## Usage
 
