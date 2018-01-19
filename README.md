@@ -12,7 +12,7 @@ Add following dependency to your `pom.xml`:
         <version>1.2</version>
     </dependency>
     
-Also, you may need to configure the Maven setup to access [Adobe Public Maven Repository|https://repo.adobe.com/].
+Also, you may need to configure the Maven setup to access [Adobe Public Maven Repository](https://repo.adobe.com/).
 
 ## Usage
 
